@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>GhostButton Example 1</title>
+		<!--
+		主要知识点：
+		1.CSS3 - transform
+		2.CSS3 - transition
+		3.CSS3 - box-sizing
+		4.CSS3 - border-radius
+		-->
+		<link rel="stylesheet" type="text/css" href="css/index1.css" />
+		<script type="text/javascript" src="js/jquery-2.0.3.min.js" ></script>
+	</head>
+	<body>
+		<div class="box">
+			<div class="link">
+				<a href="#" class="button" data-tip="This is my GhostButton">
+					<span class="line line-top"></span>
+					<span class="line line-right"></span>
+					<span class="line line-bottom"></span>
+					<span class="line line-left"></span>
+					BUTTON
+				</a>
+			</div>
+			<div class="tooltip">
+				<em></em>
+				<span></span>
+			</div>
+		</div>
+		<script>
+			$(function(){
+				$(".link .button").hover(function(){
+					// 获得tooltip应该展示的内容，并将其赋值给tooltip
+					var title = $(this).attr('data-tip');
+					$('.tooltip em').text(title);
+					// 获得活动状态的按钮距离左页边距的位置
+					// 将该值设置为tooltip距离左页边距的位置
+					// 将按钮的宽度减去tooltip的宽度，除以2，就应该是tooltip向左偏移的长度
+					// 左边距减去偏移值，就是tooltip距离左侧页边距的最终值
+					var btnMarginClientLeft = $(this).offset().left;
+					var tooltipMarginClientLeft = btnMarginClientLeft + ($(this).outerWidth() - $('.tooltip').outerWidth()) / 2;
+					$('.tooltip')
+						.css({'left':tooltipMarginClientLeft})
+						.animate({'top':25,'opacity':1},300);
+				},function(){// hover结束后的回调函数
+					$('.tooltip')
+						.animate({'top':-10,'opacity':0},300);
+				});
+			});
+		</script>
+	</body>
+</html>
